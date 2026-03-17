@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Получатели</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>E-mail</th>
+            <th>Комментарий</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for recipient in recipients %}
+        <tr>
+            <td>{{ recipient.full_name }}</td>
+            <td>{{ recipient.email }}</td>
+            <td>{{ recipient.comment }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

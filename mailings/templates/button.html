@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Моя рассылка №{{ mailing.id }}</h1>
+<p>Тема: {{ mailing.message.subject }}</p>
+<p>Начинается: {{ mailing.start_time }}</p>
+<p>Заканчивается: {{ mailing.end_time }}</p>
+
+{% if mailing.status == 'created' %}
+<a href="{% url 'launch_mailing' mailing.id %}" class="btn btn-primary">Запустить рассылку</a>
+{% endif %}
+{% endblock %}
