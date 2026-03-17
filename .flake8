@@ -1,0 +1,4 @@
+[flake8]
+max-line-length = 119
+exclude = migrations,*.egg-info,.git,vendor,node_modules,build,dist,tmp,htmlcov,docs_build, venv, .venv, build
+ignore = E203,E266,W503,F401,F403,F405,D203,D213

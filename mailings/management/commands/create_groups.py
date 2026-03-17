@@ -1,19 +1,20 @@
-from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from django.core.management.base import BaseCommand
+
 from mailings.models import Mailing
 
 
 class Command(BaseCommand):
-    help = 'Creates default groups with permissions.'
+    help = 'Создает группу "Менеджеры"'
 
-    def handle(self, *args, **kwargs):
-        content_types = ContentType.objects.get_for_models(Mailing)
+    def handle(self, *args, **options):
+        managers_group, _ = Group.objects.get_or_create(name="Менеджеры")
 
-        group_admins, created = Group.objects.get_or_create(name="Administrators")
-        if created:
-            print("Группа Administrators создана.")
-
-        group_admins.permissions.add(
-            *(Permission.objects.filter(content_type__in=content_types.values()))
+        content_type = ContentType.objects.get_for_model(Mailing)
+        can_view_all_mailings_perm, _ = Permission.objects.get_or_create(
+            codename="can_view_all_mailings",
+            name="Может просматривать все рассылки",
+            content_type=content_type
         )
+        managers_group.permissions.add(can_view_all_mailings_perm)
